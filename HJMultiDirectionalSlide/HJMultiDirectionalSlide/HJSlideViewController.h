@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  HJSlideViewController.h
 //  HJMultiDirectionalSlide
 //
 //  Created by 黄静静 on 2017/6/27.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface HJSlideViewController : UIViewController
 
 @end
-
