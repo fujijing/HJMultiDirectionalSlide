@@ -1,1 +1,1 @@
-# HJMultiDirectionalSlidei
+# HJMultiDirectionalSlide
