@@ -36,9 +36,26 @@
 }
 
 - (void)setBottomViewContentOffset:(CGPoint)contentOffset {
-    CGRect frame = self.bottomLine.frame;
-    frame.origin.x = contentOffset.x;
-    self.bottomLine.frame = frame;
+    
+    if (contentOffset.x > 2 * HJSegmentTabWidth && contentOffset.x < 5 * HJSegmentTabWidth) {
+        CGPoint point = contentOffset;
+        point.x = point.x - 2 * HJSegmentTabWidth;
+        self.scrollView.contentOffset = point;
+        NSLog(@"+++++++++++++++++++++++++++++++self.scrollView.contentSize = %f",self.scrollView.contentSize.width);
+        return;
+    } else {
+        
+        if (contentOffset.x > 5 * HJSegmentTabWidth) {
+            CGRect frame = self.bottomLine.frame;
+            frame.origin.x = contentOffset.x - (3 * HJSegmentTabWidth);
+            self.bottomLine.frame = frame;
+        } else {
+            CGRect frame = self.bottomLine.frame;
+            frame.origin.x = contentOffset.x;
+            self.bottomLine.frame = frame;
+        }
+    }
+    
 }
 
 #pragma mark - UI
@@ -46,7 +63,7 @@
 - (void)setUIElements {
     [self addSubview:self.scrollView];
     self.scrollView.contentSize = CGSizeMake(HJSegmentTabWidth * self.titles.count, HJSegmentTabHeight);
-    
+//    NSLog(@"self.scrollView.contentSize = %f",self.scrollView.contentSize.width);
     [self setAllButtons];
     [self setBottomLine];
 }
