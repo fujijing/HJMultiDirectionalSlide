@@ -7,6 +7,7 @@
 //
 
 #import "HJSlideViewController.h"
+#import "HJSegmentView.h"
 
 #define HJScreenWidth [UIScreen mainScreen].bounds.size.width
 #define HJScreenHeight [UIScreen mainScreen].bounds.size.height
@@ -15,8 +16,9 @@
 @interface HJSlideViewController ()<UIScrollViewDelegate>
 @property (nonatomic, strong) UIScrollView *hScrollView;  // scroll in horizontal
 @property (nonatomic, strong) UIView *topView;
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *tableArray;
+@property (nonatomic, strong) UITableView *tableView;    // the current tabelView show in screen
+@property (nonatomic, strong) NSMutableArray *tableArray; // store all the tabelViews we build
+@property (nonatomic, strong) HJSegmentView *segmentView;
 @end
 
 @implementation HJSlideViewController

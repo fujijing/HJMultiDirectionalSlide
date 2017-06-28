@@ -14,6 +14,7 @@
 		3F6B37211F023C27003200E7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F6B371F1F023C27003200E7 /* LaunchScreen.storyboard */; };
 		3F6B372C1F023C27003200E7 /* HJMultiDirectionalSlideUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F6B372B1F023C27003200E7 /* HJMultiDirectionalSlideUITests.m */; };
 		3F6B37381F023E7A003200E7 /* HJSlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F6B37371F023E7A003200E7 /* HJSlideViewController.m */; };
+		3F6B373B1F02557A003200E7 /* HJSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F6B373A1F02557A003200E7 /* HJSegmentView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		3F6B372D1F023C27003200E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F6B37361F023E7A003200E7 /* HJSlideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HJSlideViewController.h; sourceTree = "<group>"; };
 		3F6B37371F023E7A003200E7 /* HJSlideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HJSlideViewController.m; sourceTree = "<group>"; };
+		3F6B37391F02557A003200E7 /* HJSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HJSegmentView.h; sourceTree = "<group>"; };
+		3F6B373A1F02557A003200E7 /* HJSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HJSegmentView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,8 @@
 				3F6B37151F023C27003200E7 /* AppDelegate.m */,
 				3F6B37361F023E7A003200E7 /* HJSlideViewController.h */,
 				3F6B37371F023E7A003200E7 /* HJSlideViewController.m */,
+				3F6B37391F02557A003200E7 /* HJSegmentView.h */,
+				3F6B373A1F02557A003200E7 /* HJSegmentView.m */,
 				3F6B37111F023C27003200E7 /* Supporting Files */,
 			);
 			path = HJMultiDirectionalSlide;
@@ -217,6 +222,7 @@
 			files = (
 				3F6B37381F023E7A003200E7 /* HJSlideViewController.m in Sources */,
 				3F6B37161F023C27003200E7 /* AppDelegate.m in Sources */,
+				3F6B373B1F02557A003200E7 /* HJSegmentView.m in Sources */,
 				3F6B37131F023C27003200E7 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
