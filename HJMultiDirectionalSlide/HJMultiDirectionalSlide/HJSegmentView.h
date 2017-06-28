@@ -8,8 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^tabClick)(NSInteger index);
+
 @interface HJSegmentView : UIView
 
-//+ (instancetype)
+@property (nonatomic, strong) UIColor *buttonSelectColor;
+@property (nonatomic, strong) UIColor *buttonNormalColor;
+@property (nonatomic, strong) UIFont *titleFont;
+@property (nonatomic, strong) UIColor *bottomViewColor;
+/*
+ *  Initialization method
+ */
++ (instancetype)instanceWithFrame:(CGRect)frame withTitles:(NSArray *)titles withClick:(tabClick)titleClick;
+
+- (void)setBottomViewContentOffset:(CGPoint)contentOffset;
 
 @end

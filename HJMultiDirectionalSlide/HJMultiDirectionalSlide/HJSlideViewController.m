@@ -9,9 +9,8 @@
 #import "HJSlideViewController.h"
 #import "HJSegmentView.h"
 
-#define HJScreenWidth [UIScreen mainScreen].bounds.size.width
-#define HJScreenHeight [UIScreen mainScreen].bounds.size.height
 #define HJTopViewHeight 200
+#define HJSegmentViewH  50
 
 @interface HJSlideViewController ()<UIScrollViewDelegate>
 @property (nonatomic, strong) UIScrollView *hScrollView;  // scroll in horizontal
@@ -30,9 +29,16 @@
     self.tableArray = [NSMutableArray array];
     
     [self setUIElemets];
-    
-    // build tableVeiw with the given data, the number of the tableView completely decided by the data
-    [self setTableViewsWith:5];
+}
+
+#pragma mark -- UIScrollViewDelegate 
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView == self.hScrollView) {
+        
+        [self.segmentView setBottomViewContentOffset:CGPointMake(scrollView.contentOffset.x/5, 0)];
+        NSLog(@"=====================contentOffset x == %@", @(scrollView.contentOffset.x));
+    }
 }
 
 #pragma mark -- UI
@@ -52,13 +58,20 @@
     [vScrollView addSubview:self.topView];
     
     [self.view addSubview:vScrollView];
+    
+    // build tableVeiw with the given data, the number of the tableView completely decided by the data
+    [self setTableViewsWith:8];
+    self.segmentView = [HJSegmentView instanceWithFrame:CGRectMake(0, HJTopViewHeight, HJScreenWidth, HJSegmentViewH) withTitles:@[@"推荐", @"动漫", @"游戏", @"趣味", @"影视", @"生活", @"音乐", @"焦点"] withClick:^(NSInteger index) {
+        
+    }];
+    [vScrollView addSubview:self.segmentView];
 }
 
 - (void)setTableViewsWith:(NSInteger)count {
     for (int i = 0; i < count; i++) {
         UITableView *tableV = [self creatTableViewWithTag:i];
         if (i % 2 == 0) {
-            tableV.backgroundColor = [UIColor greenColor];
+            tableV.backgroundColor = [UIColor whiteColor];
         } else tableV.backgroundColor = [UIColor yellowColor];
         [self.hScrollView addSubview:tableV];
         [self.tableArray addObject:tableV];
@@ -79,9 +92,12 @@
     return tabelView;
 }
 
+
+#pragma mark -- lazy init
+
 - (UIScrollView *)hScrollView {
     if (_hScrollView == nil) {
-        _hScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, HJTopViewHeight, HJScreenWidth, HJScreenHeight + HJTopViewHeight)];
+        _hScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, HJTopViewHeight + HJSegmentViewH, HJScreenWidth, HJScreenHeight + HJTopViewHeight)];
         _hScrollView.backgroundColor = [UIColor blueColor];
         _hScrollView.pagingEnabled = YES;
         _hScrollView.bounces = NO;
@@ -93,7 +109,7 @@
 - (UIView *)topView {
     if (_topView == nil) {
         _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, HJScreenWidth, HJTopViewHeight)];
-        _topView.backgroundColor = [UIColor redColor];
+        _topView.backgroundColor = [UIColor yellowColor];
     }
     return _topView;
 }
