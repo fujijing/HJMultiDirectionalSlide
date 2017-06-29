@@ -73,6 +73,22 @@
     [curBtn setTitleColor:self.buttonSelectColor forState:UIControlStateNormal];
 }
 
+- (void)buttonAction:(UIButton *)button {
+    
+    if (button.tag == self.preIndex) {
+        return;
+    }
+    
+    UIButton *preBtn = self.allBtn[self.preIndex];
+    [preBtn setTitleColor:self.buttonNormalColor forState:UIControlStateNormal];
+    
+    self.curIndex = (int)button.tag;
+    
+    if (self.btnClick) {
+        self.btnClick(self.curIndex);
+    }
+}
+
 #pragma mark - UI
 
 - (void)setUIElements {
@@ -95,24 +111,6 @@
         [self.scrollView addSubview:button];
         [self.allBtn addObject:button];
     }
-    
-}
-
-- (void)buttonAction:(UIButton *)button {
-    
-    if (button.tag == self.preIndex) {
-        return;
-    }
-    
-    UIButton *preBtn = self.allBtn[self.preIndex];
-    [preBtn setTitleColor:self.buttonNormalColor forState:UIControlStateNormal];
-    
-    self.curIndex = (int)button.tag;
-    
-    if (self.btnClick) {
-        self.btnClick(self.curIndex);
-    }
-    
     
 }
 
