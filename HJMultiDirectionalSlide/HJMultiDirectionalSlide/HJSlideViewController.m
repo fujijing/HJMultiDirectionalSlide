@@ -37,7 +37,7 @@
     if (scrollView == self.hScrollView) {
         
         [self.segmentView setBottomViewContentOffset:CGPointMake(scrollView.contentOffset.x/5, 0)];
-        NSLog(@"=====================contentOffset x == %@", @(scrollView.contentOffset.x));
+//        NSLog(@"=====================contentOffset x == %@", @(scrollView.contentOffset.x));
     }
 }
 
@@ -62,7 +62,7 @@
     // build tableVeiw with the given data, the number of the tableView completely decided by the data
     [self setTableViewsWith:8];
     self.segmentView = [HJSegmentView instanceWithFrame:CGRectMake(0, HJTopViewHeight, HJScreenWidth, HJSegmentViewH) withTitles:@[@"推荐", @"动漫", @"游戏", @"趣味", @"影视", @"生活", @"音乐", @"焦点"] withClick:^(NSInteger index) {
-        
+        self.hScrollView.contentOffset = CGPointMake( index * HJScreenWidth, 0);
     }];
     [vScrollView addSubview:self.segmentView];
 }

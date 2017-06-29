@@ -16,6 +16,9 @@ typedef void(^tabClick)(NSInteger index);
 @property (nonatomic, strong) UIColor *buttonNormalColor;
 @property (nonatomic, strong) UIFont *titleFont;
 @property (nonatomic, strong) UIColor *bottomViewColor;
+
+@property (nonatomic, copy) tabClick btnClick;
+
 /*
  *  Initialization method
  */
