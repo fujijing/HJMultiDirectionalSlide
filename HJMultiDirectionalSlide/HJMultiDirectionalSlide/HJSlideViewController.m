@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UITableView *tableView;    // the current tabelView show in screen
 @property (nonatomic, strong) NSMutableArray *tableArray; // store all the tabelViews we build
 @property (nonatomic, strong) HJSegmentView *segmentView;
+@property (nonatomic) BOOL isForbidScrollDelegate;
 @end
 
 @implementation HJSlideViewController
@@ -72,7 +73,7 @@
         UITableView *tableV = [self creatTableViewWithTag:i];
         if (i % 2 == 0) {
             tableV.backgroundColor = [UIColor whiteColor];
-        } else tableV.backgroundColor = [UIColor yellowColor];
+        } else tableV.backgroundColor = [UIColor blueColor];
         [self.hScrollView addSubview:tableV];
         [self.tableArray addObject:tableV];
     }

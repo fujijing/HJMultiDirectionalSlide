@@ -42,21 +42,21 @@
 
 - (void)setBottomViewContentOffset:(CGPoint)contentOffset {
     
-    if (contentOffset.x >= 2 * HJSegmentTabWidth && contentOffset.x <= 5 * HJSegmentTabWidth) {
-        CGPoint point = contentOffset;
-        point.x = point.x - 2 * HJSegmentTabWidth;
-        self.scrollView.contentOffset = point;
-    }
+//    if (contentOffset.x >= 2 * HJSegmentTabWidth && contentOffset.x <= 5 * HJSegmentTabWidth) {
+//        CGPoint point = contentOffset;
+//        point.x = point.x - 2 * HJSegmentTabWidth;
+//        self.scrollView.contentOffset = point;
+//    }
     
-    if (self.curIndex >=2 && self.curIndex <= 5) {
-        CGRect frame = self.bottomLine.frame;
-        frame.origin.x = 2 * HJSegmentTabWidth;
-        self.bottomLine.frame = frame;
-    } else {
-        CGRect frame = self.bottomLine.frame;
-        frame.origin.x = contentOffset.x - (self.curIndex > 5 ? (3 * HJSegmentTabWidth) : 0);
-        self.bottomLine.frame = frame;
-    }
+//    if (self.curIndex >=2 && self.curIndex <= 5) {
+//        CGRect frame = self.bottomLine.frame;
+//        frame.origin.x = 2 * HJSegmentTabWidth;
+//        self.bottomLine.frame = frame;
+//    } else {
+//        CGRect frame = self.bottomLine.frame;
+//        frame.origin.x = contentOffset.x - (self.curIndex > 5 ? (3 * HJSegmentTabWidth) : 0);
+//        self.bottomLine.frame = frame;
+//    }
     
     self.curIndex = ( contentOffset.x + HJSegmentTabWidth/2 ) / ([UIScreen mainScreen].bounds.size.width/5);
     [self changeButtonStateWithPreIndex:self.preIndex curIndex:self.curIndex];
@@ -71,6 +71,20 @@
     UIButton *curBtn = self.allBtn[curIndex];
     [preBtn setTitleColor:self.buttonNormalColor forState:UIControlStateNormal];
     [curBtn setTitleColor:self.buttonSelectColor forState:UIControlStateNormal];
+    
+    CGPoint center;
+    center.x = curBtn.center.x;
+    center.y = self.bottomLine.center.y;
+    self.bottomLine.center = center;
+    
+    if (self.isScrolled) {
+        self.isScrolled = NO;
+        return;
+    }
+    if (curBtn.center.x > 4 * HJSegmentTabWidth) {
+        CGPoint point = CGPointMake(HJSegmentTabWidth * (curIndex - 4), 0);
+        self.scrollView.contentOffset = point;
+    }
 }
 
 - (void)buttonAction:(UIButton *)button {
@@ -83,7 +97,7 @@
     [preBtn setTitleColor:self.buttonNormalColor forState:UIControlStateNormal];
     
     self.curIndex = (int)button.tag;
-    
+    self.isScrolled = YES;
     if (self.btnClick) {
         self.btnClick(self.curIndex);
     }
@@ -117,7 +131,7 @@
 - (void)setBottomLine {
     self.bottomLine = [[UIView alloc ] initWithFrame:CGRectMake(0, HJSegmentTabHeight, HJSegmentTabWidth, 2)];
     self.bottomLine.backgroundColor = self.bottomViewColor;
-    [self addSubview:self.bottomLine];
+    [self.scrollView addSubview:self.bottomLine];
 }
 
 
@@ -125,7 +139,7 @@
 
 - (UIScrollView *)scrollView {
     if (_scrollView == nil) {
-        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, HJScreenWidth, HJSegmentTabHeight)];
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, HJScreenWidth, HJSegmentTabHeight + 2)];
         _scrollView.backgroundColor = [UIColor clearColor];
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.scrollsToTop = NO;

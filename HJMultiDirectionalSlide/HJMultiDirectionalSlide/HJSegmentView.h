@@ -18,6 +18,7 @@ typedef void(^tabClick)(NSInteger index);
 @property (nonatomic, strong) UIColor *bottomViewColor;
 
 @property (nonatomic, copy) tabClick btnClick;
+@property (nonatomic) BOOL isScrolled;
 
 /*
  *  Initialization method
