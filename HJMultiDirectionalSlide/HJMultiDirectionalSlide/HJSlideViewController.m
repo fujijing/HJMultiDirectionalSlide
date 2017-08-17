@@ -12,7 +12,7 @@
 #define HJTopViewHeight 200
 #define HJSegmentViewH  50
 
-@interface HJSlideViewController ()<UIScrollViewDelegate>
+@interface HJSlideViewController ()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UIScrollView *hScrollView;  // scroll in horizontal
 @property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UITableView *tableView;    // the current tabelView show in screen
@@ -41,6 +41,22 @@
 //        NSLog(@"=====================contentOffset x == %@", @(scrollView.contentOffset.x));
     }
 }
+
+#pragma mark - UITableViewDelegate
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 30;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
+    }
+    cell.textLabel.text = [NSString stringWithFormat:@"测试:%ld", indexPath.row];
+    return cell;
+}
+
 
 #pragma mark -- UI
 
@@ -87,6 +103,9 @@
     UITableView *tabelView = [[UITableView alloc] initWithFrame:CGRectMake(offX, 0, HJScreenWidth, HJScreenHeight)];
     tabelView.backgroundColor = [UIColor whiteColor];
     tabelView.separatorStyle = UITableViewCellSelectionStyleNone;
+    [tabelView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    tabelView.delegate = self;
+    tabelView.dataSource = self;
     tabelView.scrollsToTop = YES;
     tabelView.tag = tag;
     tabelView.scrollEnabled = NO;
