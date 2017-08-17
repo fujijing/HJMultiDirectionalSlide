@@ -14,6 +14,7 @@
 
 @interface HJSlideViewController ()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UIScrollView *hScrollView;  // scroll in horizontal
+@property (nonatomic, strong) UIScrollView *vScrollView;
 @property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UITableView *tableView;    // the current tabelView show in screen
 @property (nonatomic, strong) NSMutableArray *tableArray; // store all the tabelViews we build
@@ -40,6 +41,22 @@
         [self.segmentView setBottomViewContentOffset:CGPointMake(scrollView.contentOffset.x/5, 0)];
 //        NSLog(@"=====================contentOffset x == %@", @(scrollView.contentOffset.x));
     }
+    
+    NSLog(@"=====================contentOffset x == %@", @(scrollView.contentOffset.y));
+    if (scrollView.tag == 999) {
+        if (scrollView.contentOffset.y > 200) {
+            scrollView.scrollEnabled = NO;
+            for (int i = 0; i < 8; i++) {
+                UITableView *tableV = self.tableArray[i];
+                tableV.scrollEnabled = YES;
+            }
+        }
+    }
+    
+    if ([scrollView isKindOfClass:[UITableView class]] && scrollView.contentOffset.y < 0) {
+        scrollView.scrollEnabled = NO;
+        self.vScrollView.scrollEnabled = YES;
+    }
 }
 
 #pragma mark - UITableViewDelegate
@@ -62,26 +79,26 @@
 
 - (void)setUIElemets {
     self.view.backgroundColor = [UIColor whiteColor];
-    UIScrollView *vScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, HJScreenWidth, HJScreenHeight)];
-    vScrollView.backgroundColor = [UIColor whiteColor];
-    vScrollView.showsVerticalScrollIndicator = NO;
-    vScrollView.contentSize = CGSizeMake(HJScreenWidth, HJScreenHeight + HJTopViewHeight);
-    vScrollView.tag = 999;
-    vScrollView.delegate = self;
-    vScrollView.scrollsToTop = NO;
+    _vScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, HJScreenWidth, HJScreenHeight)];
+    _vScrollView.backgroundColor = [UIColor whiteColor];
+    _vScrollView.showsVerticalScrollIndicator = NO;
+    _vScrollView.contentSize = CGSizeMake(HJScreenWidth, HJScreenHeight + HJTopViewHeight);
+    _vScrollView.tag = 999;
+    _vScrollView.delegate = self;
+    _vScrollView.scrollsToTop = NO;
 //    vScrollView.bounces = NO;
-    [vScrollView addSubview:self.hScrollView];
+    [_vScrollView addSubview:self.hScrollView];
     
-    [vScrollView addSubview:self.topView];
+    [_vScrollView addSubview:self.topView];
     
-    [self.view addSubview:vScrollView];
+    [self.view addSubview:_vScrollView];
     
     // build tableVeiw with the given data, the number of the tableView completely decided by the data
     [self setTableViewsWith:8];
     self.segmentView = [HJSegmentView instanceWithFrame:CGRectMake(0, HJTopViewHeight, HJScreenWidth, HJSegmentViewH) withTitles:@[@"推荐", @"动漫", @"游戏", @"趣味", @"影视", @"生活", @"音乐", @"焦点"] withClick:^(NSInteger index) {
         self.hScrollView.contentOffset = CGPointMake( index * HJScreenWidth, 0);
     }];
-    [vScrollView addSubview:self.segmentView];
+    [_vScrollView addSubview:self.segmentView];
 }
 
 - (void)setTableViewsWith:(NSInteger)count {
