@@ -54,7 +54,10 @@
     }
     
     if ([scrollView isKindOfClass:[UITableView class]] && scrollView.contentOffset.y < 0) {
-        scrollView.scrollEnabled = NO;
+        for (int i = 0; i < 8; i++) {
+            UITableView *tableV = self.tableArray[i];
+            tableV.scrollEnabled = NO;
+        }
         self.vScrollView.scrollEnabled = YES;
     }
 }
