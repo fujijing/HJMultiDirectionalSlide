@@ -12,7 +12,7 @@
 #define HJTopViewHeight 200
 #define HJSegmentViewH  50
 
-@interface HJSlideViewController ()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface HJSlideViewController ()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UIScrollView *hScrollView;  // scroll in horizontal
 @property (nonatomic, strong) UIScrollView *vScrollView;
 @property (nonatomic, strong) UIView *topView;
@@ -20,6 +20,9 @@
 @property (nonatomic, strong) NSMutableArray *tableArray; // store all the tabelViews we build
 @property (nonatomic, strong) HJSegmentView *segmentView;
 @property (nonatomic) BOOL isForbidScrollDelegate;
+@property (nonatomic) BOOL vScrollViewEnabled;
+@property (nonatomic) BOOL subScrollViewEnabled;
+@property (nonatomic, assign) CGFloat currentPanY;
 @end
 
 @implementation HJSlideViewController
@@ -29,36 +32,82 @@
     // Do any additional setup after loading the view.
     
     self.tableArray = [NSMutableArray array];
-    
+    self.currentPanY = 0;
     [self setUIElemets];
+}
+
+- (void)panGes:(UIPanGestureRecognizer *)ges
+{
+    if (ges.state != UIGestureRecognizerStateChanged) {
+        self.currentPanY = 0;
+        self.vScrollViewEnabled = NO;
+        self.subScrollViewEnabled = NO;
+    } else {
+        CGFloat currentY = [ges translationInView:self.vScrollView].y;
+       
+        if (self.vScrollViewEnabled || self.subScrollViewEnabled) {
+            if (self.currentPanY == 0) {
+                self.currentPanY = currentY;   // 记录下临界点是 Y
+            }
+            NSLog(@"**************************** currentY = %f", self.currentPanY );
+            CGFloat offSetY = self.currentPanY - currentY; // 计算在临界点的 offsetY
+            NSLog(@"----------------------------------- offSetY = %f",offSetY);
+            if (self.vScrollViewEnabled) {
+                if ((HJTopViewHeight + offSetY) >= 0) {
+                    self.vScrollView.contentOffset = CGPointMake(0, HJTopViewHeight + offSetY);
+                } else {
+                    self.vScrollView.contentOffset = CGPointZero;
+                }
+            } else {
+                self.tableView.contentOffset = CGPointMake(0, offSetY);
+            }
+        }
+    }
 }
 
 #pragma mark -- UIScrollViewDelegate 
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView == self.hScrollView) {
-        
+        NSInteger index = scrollView.contentOffset.x/HJScreenWidth;
+        self.tableView = self.tableArray[index];
         [self.segmentView setBottomViewContentOffset:CGPointMake(scrollView.contentOffset.x/5, 0)];
-//        NSLog(@"=====================contentOffset x == %@", @(scrollView.contentOffset.x));
     }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    NSLog(@"=====================contentOffset x == %@", @(scrollView.contentOffset.y));
+//    NSLog(@"=====================contentOffset y == %@", @(scrollView.contentOffset.y));
     if (scrollView.tag == 999) {
         if (scrollView.contentOffset.y > 200) {
+            NSLog(@"=====================contentOffset y == %@", @(scrollView.contentOffset.y));
             scrollView.scrollEnabled = NO;
-            for (int i = 0; i < 8; i++) {
+            self.vScrollViewEnabled = NO;
+            for (int i = 0; i < 5; i++) {
                 UITableView *tableV = self.tableArray[i];
                 tableV.scrollEnabled = YES;
+                self.subScrollViewEnabled = YES;
             }
+//            [self.vScrollView setContentOffset:CGPointMake(0, HJTopViewHeight) animated:false];
+        }
+
+        if (scrollView.contentOffset.y < 0) {
+            [self.vScrollView setContentOffset:CGPointZero animated:NO];
         }
     }
     
     if ([scrollView isKindOfClass:[UITableView class]] && scrollView.contentOffset.y < 0) {
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 5; i++) {
             UITableView *tableV = self.tableArray[i];
             tableV.scrollEnabled = NO;
+            self.subScrollViewEnabled = NO;
+            if (tableV.tag != scrollView.tag) {
+                [tableV setContentOffset:CGPointZero animated:false];
+            }
         }
         self.vScrollView.scrollEnabled = YES;
+        self.vScrollViewEnabled = YES;
+        [self.vScrollView setContentOffset:CGPointMake(0, scrollView.contentOffset.y + self.vScrollView.contentOffset.y)];
     }
 }
 
@@ -77,39 +126,41 @@
     return cell;
 }
 
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
 
 #pragma mark -- UI
 
 - (void)setUIElemets {
     self.view.backgroundColor = [UIColor whiteColor];
-    _vScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, HJScreenWidth, HJScreenHeight)];
-    _vScrollView.backgroundColor = [UIColor whiteColor];
-    _vScrollView.showsVerticalScrollIndicator = NO;
-    _vScrollView.contentSize = CGSizeMake(HJScreenWidth, HJScreenHeight + HJTopViewHeight);
-    _vScrollView.tag = 999;
-    _vScrollView.delegate = self;
-    _vScrollView.scrollsToTop = NO;
-//    vScrollView.bounces = NO;
-    [_vScrollView addSubview:self.hScrollView];
-    
-    [_vScrollView addSubview:self.topView];
-    
-    [self.view addSubview:_vScrollView];
-    
+
+    [self.view addSubview:self.vScrollView];
+    [self.vScrollView addSubview:self.hScrollView];
+    [self.vScrollView addSubview:self.topView];
+    self.subScrollViewEnabled = NO;
+    self.vScrollViewEnabled = YES;
+
     // build tableVeiw with the given data, the number of the tableView completely decided by the data
-    [self setTableViewsWith:8];
-    self.segmentView = [HJSegmentView instanceWithFrame:CGRectMake(0, HJTopViewHeight, HJScreenWidth, HJSegmentViewH) withTitles:@[@"推荐", @"动漫", @"游戏", @"趣味", @"影视", @"生活", @"音乐", @"焦点"] withClick:^(NSInteger index) {
+    [self setTableViewsWith:5];
+    self.segmentView = [HJSegmentView instanceWithFrame:CGRectMake(0, HJTopViewHeight, HJScreenWidth, HJSegmentViewH) withTitles:@[@"推荐", @"动漫", @"游戏", @"趣味", @"影视"] withClick:^(NSInteger index) {
+        self.tableView = self.tableArray[index];
         self.hScrollView.contentOffset = CGPointMake( index * HJScreenWidth, 0);
     }];
     [_vScrollView addSubview:self.segmentView];
+    
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGes:)];
+    pan.delegate = self;
+    [self.vScrollView addGestureRecognizer:pan];
+    
 }
 
 - (void)setTableViewsWith:(NSInteger)count {
     for (int i = 0; i < count; i++) {
         UITableView *tableV = [self creatTableViewWithTag:i];
-        if (i % 2 == 0) {
-            tableV.backgroundColor = [UIColor whiteColor];
-        } else tableV.backgroundColor = [UIColor blueColor];
         [self.hScrollView addSubview:tableV];
         [self.tableArray addObject:tableV];
     }
@@ -120,20 +171,32 @@
 
 - (UITableView *)creatTableViewWithTag:(NSInteger)tag {
     CGFloat offX = HJScreenWidth * tag;
-    UITableView *tabelView = [[UITableView alloc] initWithFrame:CGRectMake(offX, 0, HJScreenWidth, HJScreenHeight)];
-    tabelView.backgroundColor = [UIColor whiteColor];
-    tabelView.separatorStyle = UITableViewCellSelectionStyleNone;
-    [tabelView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
-    tabelView.delegate = self;
-    tabelView.dataSource = self;
-    tabelView.scrollsToTop = YES;
-    tabelView.tag = tag;
-    tabelView.scrollEnabled = NO;
-    return tabelView;
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(offX, 0, HJScreenWidth, HJScreenHeight)];
+    tableView.backgroundColor = [UIColor whiteColor];
+    tableView.separatorStyle = UITableViewCellSelectionStyleNone;
+    [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    tableView.tag = tag;
+    tableView.scrollEnabled = NO;
+    return tableView;
 }
 
 
 #pragma mark -- lazy init
+
+- (UIScrollView *)vScrollView {
+    if (_vScrollView == nil) {
+        _vScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, HJScreenWidth, HJScreenHeight)];
+        _vScrollView.backgroundColor = [UIColor whiteColor];
+        _vScrollView.showsVerticalScrollIndicator = NO;
+        _vScrollView.contentSize = CGSizeMake(HJScreenWidth, HJScreenHeight + HJTopViewHeight);
+        _vScrollView.tag = 999;
+        _vScrollView.delegate = self;
+        _vScrollView.scrollsToTop = NO;
+    }
+    return _vScrollView;
+}
 
 - (UIScrollView *)hScrollView {
     if (_hScrollView == nil) {
