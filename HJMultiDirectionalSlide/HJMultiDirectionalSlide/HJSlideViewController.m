@@ -187,7 +187,7 @@
 
 - (UIScrollView *)vScrollView {
     if (_vScrollView == nil) {
-        _vScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, HJScreenWidth, HJScreenHeight)];
+        _vScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, HJScreenWidth, HJScreenHeight)];
         _vScrollView.backgroundColor = [UIColor whiteColor];
         _vScrollView.showsVerticalScrollIndicator = NO;
         _vScrollView.contentSize = CGSizeMake(HJScreenWidth, HJScreenHeight + HJTopViewHeight);
