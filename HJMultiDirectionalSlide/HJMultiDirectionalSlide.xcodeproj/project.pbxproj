@@ -15,6 +15,8 @@
 		3F6B372C1F023C27003200E7 /* HJMultiDirectionalSlideUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F6B372B1F023C27003200E7 /* HJMultiDirectionalSlideUITests.m */; };
 		3F6B37381F023E7A003200E7 /* HJSlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F6B37371F023E7A003200E7 /* HJSlideViewController.m */; };
 		3F6B373B1F02557A003200E7 /* HJSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F6B373A1F02557A003200E7 /* HJSegmentView.m */; };
+		3F7ED80D1F4718A8005E685C /* HJScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F7ED80C1F4718A8005E685C /* HJScrollViewController.m */; };
+		3F7ED8101F47190C005E685C /* HJTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F7ED80F1F47190B005E685C /* HJTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,10 @@
 		3F6B37371F023E7A003200E7 /* HJSlideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HJSlideViewController.m; sourceTree = "<group>"; };
 		3F6B37391F02557A003200E7 /* HJSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HJSegmentView.h; sourceTree = "<group>"; };
 		3F6B373A1F02557A003200E7 /* HJSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HJSegmentView.m; sourceTree = "<group>"; };
+		3F7ED80B1F4718A8005E685C /* HJScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HJScrollViewController.h; sourceTree = "<group>"; };
+		3F7ED80C1F4718A8005E685C /* HJScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HJScrollViewController.m; sourceTree = "<group>"; };
+		3F7ED80E1F47190B005E685C /* HJTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HJTableViewController.h; sourceTree = "<group>"; };
+		3F7ED80F1F47190B005E685C /* HJTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HJTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +95,10 @@
 				3F6B37151F023C27003200E7 /* AppDelegate.m */,
 				3F6B37361F023E7A003200E7 /* HJSlideViewController.h */,
 				3F6B37371F023E7A003200E7 /* HJSlideViewController.m */,
+				3F7ED80B1F4718A8005E685C /* HJScrollViewController.h */,
+				3F7ED80C1F4718A8005E685C /* HJScrollViewController.m */,
+				3F7ED80E1F47190B005E685C /* HJTableViewController.h */,
+				3F7ED80F1F47190B005E685C /* HJTableViewController.m */,
 				3F6B37391F02557A003200E7 /* HJSegmentView.h */,
 				3F6B373A1F02557A003200E7 /* HJSegmentView.m */,
 				3F6B37111F023C27003200E7 /* Supporting Files */,
@@ -223,9 +233,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F6B37381F023E7A003200E7 /* HJSlideViewController.m in Sources */,
+				3F7ED8101F47190C005E685C /* HJTableViewController.m in Sources */,
 				3F6B37161F023C27003200E7 /* AppDelegate.m in Sources */,
 				3F6B373B1F02557A003200E7 /* HJSegmentView.m in Sources */,
 				3F6B37131F023C27003200E7 /* main.m in Sources */,
+				3F7ED80D1F4718A8005E685C /* HJScrollViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

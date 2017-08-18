@@ -30,17 +30,17 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zh4-1g-gwT">
-                                <rect key="frame" x="164" y="265" width="46" height="30"/>
+                                <rect key="frame" x="114" y="265" width="147" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="仿scrollView滑动效果"/>
                                 <connections>
                                     <segue destination="Xtb-Sk-Kjf" kind="show" id="YdI-7r-w4k"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PJ9-7f-o1U">
-                                <rect key="frame" x="164" y="327" width="46" height="30"/>
+                                <rect key="frame" x="108" y="327" width="159" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="tableView控制上下滑动"/>
                                 <connections>
                                     <segue destination="iRk-pO-0Vx" kind="show" id="Kpw-Qy-t7I"/>
                                 </connections>
@@ -72,10 +72,10 @@
             </objects>
             <point key="canvasLocation" x="1720.8" y="53.523238380809602"/>
         </scene>
-        <!--View Controller-->
+        <!--Table View Controller-->
         <scene sceneID="CDN-cb-bCq">
             <objects>
-                <viewController id="iRk-pO-0Vx" sceneMemberID="viewController">
+                <viewController id="iRk-pO-0Vx" customClass="HJTableViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nV6-hh-tW5"/>
                         <viewControllerLayoutGuide type="bottom" id="0Bd-ck-mIS"/>
@@ -90,15 +90,15 @@
             </objects>
             <point key="canvasLocation" x="1010" y="842"/>
         </scene>
-        <!--View Controller-->
+        <!--Scroll View Controller-->
         <scene sceneID="GMb-hK-Ede">
             <objects>
-                <viewController id="Xtb-Sk-Kjf" sceneMemberID="viewController">
+                <viewController id="Xtb-Sk-Kjf" customClass="HJScrollViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="o2E-wr-Fdq"/>
                         <viewControllerLayoutGuide type="bottom" id="uyd-ij-15h"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="4UZ-Up-W4i">
+                    <view key="view" contentMode="scaleToFill" id="4UZ-Up-W4i" customClass="HJScroll">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
