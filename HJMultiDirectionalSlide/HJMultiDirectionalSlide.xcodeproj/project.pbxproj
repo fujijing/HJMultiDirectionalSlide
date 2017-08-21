@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F5879D71F4AC19200AAEE9E /* HJScrollViewAddDynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F5879D61F4AC19200AAEE9E /* HJScrollViewAddDynamicViewController.m */; };
+		3F5879DA1F4AC9E300AAEE9E /* LJDynamicItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F5879D91F4AC9E300AAEE9E /* LJDynamicItem.m */; };
 		3F6B37131F023C27003200E7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F6B37121F023C27003200E7 /* main.m */; };
 		3F6B37161F023C27003200E7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F6B37151F023C27003200E7 /* AppDelegate.m */; };
 		3F6B371C1F023C27003200E7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F6B371A1F023C27003200E7 /* Main.storyboard */; };
@@ -30,6 +32,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3F5879D51F4AC19200AAEE9E /* HJScrollViewAddDynamicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HJScrollViewAddDynamicViewController.h; sourceTree = "<group>"; };
+		3F5879D61F4AC19200AAEE9E /* HJScrollViewAddDynamicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HJScrollViewAddDynamicViewController.m; sourceTree = "<group>"; };
+		3F5879D81F4AC9E300AAEE9E /* LJDynamicItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJDynamicItem.h; sourceTree = "<group>"; };
+		3F5879D91F4AC9E300AAEE9E /* LJDynamicItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJDynamicItem.m; sourceTree = "<group>"; };
 		3F664A461F0380DF00F804EE /* HJMultiDirectionalSlide-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HJMultiDirectionalSlide-Prefix.pch"; sourceTree = "<group>"; };
 		3F6B370E1F023C27003200E7 /* HJMultiDirectionalSlide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HJMultiDirectionalSlide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F6B37121F023C27003200E7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -91,6 +97,8 @@
 		3F6B37101F023C27003200E7 /* HJMultiDirectionalSlide */ = {
 			isa = PBXGroup;
 			children = (
+				3F5879D81F4AC9E300AAEE9E /* LJDynamicItem.h */,
+				3F5879D91F4AC9E300AAEE9E /* LJDynamicItem.m */,
 				3F6B37141F023C27003200E7 /* AppDelegate.h */,
 				3F6B37151F023C27003200E7 /* AppDelegate.m */,
 				3F6B37361F023E7A003200E7 /* HJSlideViewController.h */,
@@ -99,6 +107,8 @@
 				3F7ED80C1F4718A8005E685C /* HJScrollViewController.m */,
 				3F7ED80E1F47190B005E685C /* HJTableViewController.h */,
 				3F7ED80F1F47190B005E685C /* HJTableViewController.m */,
+				3F5879D51F4AC19200AAEE9E /* HJScrollViewAddDynamicViewController.h */,
+				3F5879D61F4AC19200AAEE9E /* HJScrollViewAddDynamicViewController.m */,
 				3F6B37391F02557A003200E7 /* HJSegmentView.h */,
 				3F6B373A1F02557A003200E7 /* HJSegmentView.m */,
 				3F6B37111F023C27003200E7 /* Supporting Files */,
@@ -233,8 +243,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F6B37381F023E7A003200E7 /* HJSlideViewController.m in Sources */,
+				3F5879D71F4AC19200AAEE9E /* HJScrollViewAddDynamicViewController.m in Sources */,
 				3F7ED8101F47190C005E685C /* HJTableViewController.m in Sources */,
 				3F6B37161F023C27003200E7 /* AppDelegate.m in Sources */,
+				3F5879DA1F4AC9E300AAEE9E /* LJDynamicItem.m in Sources */,
 				3F6B373B1F02557A003200E7 /* HJSegmentView.m in Sources */,
 				3F6B37131F023C27003200E7 /* main.m in Sources */,
 				3F7ED80D1F4718A8005E685C /* HJScrollViewController.m in Sources */,

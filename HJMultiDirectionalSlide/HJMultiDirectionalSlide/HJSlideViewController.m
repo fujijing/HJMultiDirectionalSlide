@@ -42,14 +42,14 @@
         self.currentPanY = 0;
         self.vScrollViewEnabled = NO;
         self.subScrollViewEnabled = NO;
+        NSLog(@"ges.state != UIGestureRecognizerStateChanged");
     } else {
         CGFloat currentY = [ges translationInView:self.vScrollView].y;
-       
         if (self.vScrollViewEnabled || self.subScrollViewEnabled) {
             if (self.currentPanY == 0) {
                 self.currentPanY = currentY;   // 记录下临界点是 Y
             }
-            NSLog(@"**************************** currentY = %f", self.currentPanY );
+            NSLog(@"======================================== self.currentPanY = %f", self.currentPanY );
             CGFloat offSetY = self.currentPanY - currentY; // 计算在临界点的 offsetY
             NSLog(@"----------------------------------- offSetY = %f",offSetY);
             if (self.vScrollViewEnabled) {
@@ -77,20 +77,21 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-//    NSLog(@"=====================contentOffset y == %@", @(scrollView.contentOffset.y));
+    NSLog(@"=====================contentOffset y == %@", @(scrollView.contentOffset.y));
     if (scrollView.tag == 999) {
-        if (scrollView.contentOffset.y > 200) {
-            NSLog(@"=====================contentOffset y == %@", @(scrollView.contentOffset.y));
+        if (scrollView.contentOffset.y > HJTopViewHeight) {
+            [self.vScrollView setContentOffset:CGPointMake(0, HJTopViewHeight)];
             scrollView.scrollEnabled = NO;
             self.vScrollViewEnabled = NO;
             for (int i = 0; i < 5; i++) {
                 UITableView *tableV = self.tableArray[i];
                 tableV.scrollEnabled = YES;
                 self.subScrollViewEnabled = YES;
+                if (tableV.tag == self.tableView.tag) {
+                    [tableV setContentOffset:CGPointMake(0, scrollView.contentOffset.y - HJTopViewHeight) animated:false];
+                }
             }
-//            [self.vScrollView setContentOffset:CGPointMake(0, HJTopViewHeight) animated:false];
         }
-
         if (scrollView.contentOffset.y < 0) {
             [self.vScrollView setContentOffset:CGPointZero animated:NO];
         }
@@ -137,7 +138,7 @@
 
 - (void)setUIElemets {
     self.view.backgroundColor = [UIColor whiteColor];
-
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:self.vScrollView];
     [self.vScrollView addSubview:self.hScrollView];
     [self.vScrollView addSubview:self.topView];
@@ -149,6 +150,7 @@
     self.segmentView = [HJSegmentView instanceWithFrame:CGRectMake(0, HJTopViewHeight, HJScreenWidth, HJSegmentViewH) withTitles:@[@"推荐", @"动漫", @"游戏", @"趣味", @"影视"] withClick:^(NSInteger index) {
         self.tableView = self.tableArray[index];
         self.hScrollView.contentOffset = CGPointMake( index * HJScreenWidth, 0);
+        [self.segmentView setBottomViewContentOffset:CGPointMake(self.hScrollView.contentOffset.x/5, 0)];
     }];
     [_vScrollView addSubview:self.segmentView];
     
