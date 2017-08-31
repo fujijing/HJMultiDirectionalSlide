@@ -22,6 +22,10 @@
 @end
 
 @implementation HJSegmentView
+{
+    CGFloat _num;
+    CGFloat _buttonWidth;
+}
 
 
 + (instancetype)instanceWithFrame:(CGRect)frame withTitles:(NSArray *)titles withClick:(tabClick)titleClick {
@@ -35,6 +39,14 @@
         self.preIndex = 0;
         self.curIndex = 0;
         self.btnClick = titleClick;
+        if (self.titles.count >= 5) {
+            _num = 5;
+            _buttonWidth = HJSegmentTabWidth;
+        } else {
+            _num = self.titles.count;
+            _buttonWidth = HJScreenWidth / _num;
+        }
+
         [self setUIElements];
     }
     return self;
@@ -58,7 +70,16 @@
 //        self.bottomLine.frame = frame;
 //    }
     
-    self.curIndex = ( contentOffset.x + HJSegmentTabWidth/2 ) / ([UIScreen mainScreen].bounds.size.width/5);
+//    CGFloat num = 0;
+//    CGFloat buttonWidth = 0;
+//    if (self.titles.count >= 5) {
+//        num = 5;
+//        buttonWidth = HJSegmentTabWidth;
+//    } else {
+//        num = self.titles.count;
+//        buttonWidth = HJScreenWidth / num;
+//    }
+    self.curIndex = ( contentOffset.x + _buttonWidth/2 ) / ([UIScreen mainScreen].bounds.size.width/_num);
     [self changeButtonStateWithPreIndex:self.preIndex curIndex:self.curIndex];
     self.preIndex = self.curIndex;
     
@@ -116,7 +137,7 @@
 - (void)setAllButtons {
     
     for (int i = 0; i < self.titles.count; i++) {
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(i * HJSegmentTabWidth, 0, HJSegmentTabWidth, HJSegmentTabHeight)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(i * _buttonWidth, 0, _buttonWidth, HJSegmentTabHeight)];
         button.backgroundColor = [UIColor clearColor];
         [button setTitle:self.titles[i] forState:UIControlStateNormal];
         [button setTitleColor: i == 0 ? self.buttonSelectColor : self.buttonNormalColor forState:UIControlStateNormal];
@@ -129,7 +150,7 @@
 }
 
 - (void)setBottomLine {
-    self.bottomLine = [[UIView alloc ] initWithFrame:CGRectMake(0, HJSegmentTabHeight, HJSegmentTabWidth, 2)];
+    self.bottomLine = [[UIView alloc ] initWithFrame:CGRectMake(0, HJSegmentTabHeight, _buttonWidth, 2)];
     self.bottomLine.backgroundColor = self.bottomViewColor;
     [self.scrollView addSubview:self.bottomLine];
 }
